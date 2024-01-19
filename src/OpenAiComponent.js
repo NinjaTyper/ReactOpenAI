@@ -1,7 +1,7 @@
 // src/App.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import OPENAI_API_KEY from './config/openai.js';
+import {OPENAI_API_KEY} from './config/openai.js';
 function Openai() {
   const [response, setResponse] = useState('');
   useEffect(() => {
