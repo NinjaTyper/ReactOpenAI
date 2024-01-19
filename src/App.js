@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import Openai from './Openai';
+import Openai from './OpenAiComponent';
 
 function App() {
   return (
