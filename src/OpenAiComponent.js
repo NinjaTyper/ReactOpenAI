@@ -8,10 +8,10 @@ function Openai() {
     const fetchData = async () => {
       try {
         const response = await axios.post(
-          'https://api.openai.com/v1/engines/davinci-codex/completions',
+          'https://api.openai.com/v1/chat/completions',
           {
-            prompt: 'Once upon a time',
-            max_tokens: 100,
+            model: 'gpt-3.5-turbo',
+            messages: [{role: 'system', content: `hi`}],
           },
           {
             headers: {

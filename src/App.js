@@ -1,23 +1,17 @@
 import logo from './logo.svg';
 import './App.css';
-import Openai from './OpenAiComponent';
+import Openai from './OpenAiComponent.js';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="login-form-container">
+          <label htmlFor="username">Username:</label>
+          <input type="text" id="username" name="username"/>
+          <label htmlFor="password">Password:</label>
+          <input type="text" id="password" name="password"/>
+          <button type="button">Sign In!</button>
+      </div>
       <Openai/>
     </div>
   );
