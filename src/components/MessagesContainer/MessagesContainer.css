@@ -1,0 +1,27 @@
+.messages-container {
+    display: flex;
+    align-items: flex-end;
+    border: 1px solid black;
+    height: calc(100vh - 20px);
+    width: 600px;
+    margin: 10px auto;
+}
+
+.text-input-container {
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid black;
+    height: 50px;
+    width: 580px;
+    margin: 0 auto 10px;
+}
+
+.send-button {
+    flex: 1;
+    height: calc(100% - 10px);
+    margin: 5px 0;
+}
+
+.text-input-field {
+    flex: 2;
+}
