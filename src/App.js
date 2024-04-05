@@ -12,7 +12,7 @@ function App() {
           <input type="text" id="password" name="password"/>
           <button type="button">Sign In!</button>
       </div>
-      <Openai/>
+      {/* <Openai/> */}
     </div>
   );
 }
