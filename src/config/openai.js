@@ -1,1 +1,1 @@
-export const OPENAI_API_KEY = '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';
+export const OPENAI_API_KEY = '';
