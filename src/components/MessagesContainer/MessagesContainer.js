@@ -1,19 +1,22 @@
 import * as React from 'react';
+import { getResponse } from '../OpenAI/OpenAIHelper';
 import './MessagesContainer.css';
 
 export default function MessagesContainer(props) {
     const [userInput, setUserInput] = React.useState('');
     const [messages, setMessages] = React.useState([]);
-    console.log('list of messages', messages);
-    console.log('current user input', userInput);
+    const [responses, setResponses] = React.useState([]);
 
     const handleUserInputChange = (textInput) => {
         setUserInput(textInput);
     };
 
-    const handleSendMessages = (newMessage) => {
+    const handleSendMessages = async (newMessage) => {
+        const newResponse = await getResponse(newMessage);
+        const allResponses = [...responses, newResponse];
         const allMessages = [...messages, newMessage];
         setMessages(allMessages);
+        setResponses(allResponses);
         setUserInput('');
     };
 
@@ -21,6 +24,9 @@ export default function MessagesContainer(props) {
         <div className="messages-container">
             <div className="all-messages">
                 {messages.map((message) => <p>{message}</p>)}
+            </div>
+            <div className="all-responses">
+                {responses.map((response) => <p>{response}</p>)}
             </div>
             <div className="text-input-container">
                 <input 
