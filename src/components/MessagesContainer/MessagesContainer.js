@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { getResponse } from '../OpenAI/OpenAIHelper';
+import axios from 'axios';
 import './MessagesContainer.css';
 
 export default function MessagesContainer(props) {
@@ -7,16 +7,32 @@ export default function MessagesContainer(props) {
     const [messages, setMessages] = React.useState([]);
     const [responses, setResponses] = React.useState([]);
 
+    React.useEffect(
+        () => {
+            const fetchData = async () => {
+                try {
+                    const lastMessage = messages[messages.length - 1];
+                    const apiUrl = `http://localhost:4000?question=${lastMessage}`;
+                    const newResponse = await axios(apiUrl);
+                    console.log(newResponse.data);
+                    const allResponses = [...responses, newResponse.data];
+                    setResponses(allResponses);
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+            fetchData();
+        },
+        [messages],
+    );
+
     const handleUserInputChange = (textInput) => {
         setUserInput(textInput);
     };
 
     const handleSendMessages = async (newMessage) => {
-        const newResponse = await getResponse(newMessage);
-        const allResponses = [...responses, newResponse];
         const allMessages = [...messages, newMessage];
         setMessages(allMessages);
-        setResponses(allResponses);
         setUserInput('');
     };
 
