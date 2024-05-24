@@ -6,7 +6,7 @@ const app = express();
 const port = 4000; // You can change this to any port you prefer
 
 const configuration = {
-    apiKey: '',
+    // apiKey: '',
 };
 
 const openAi = new OpenAI(configuration);
