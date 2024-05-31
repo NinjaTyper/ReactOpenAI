@@ -27,3 +27,18 @@
 .text-input-field {
     flex: 2;
 }
+
+.all-messages {
+    width: calc(100% - 16px);
+    padding: 8px;
+}
+
+.user-message {
+    width: 100%;
+    text-align: right;
+}
+
+.ai-response {
+    width: 100%;
+    text-align: left;
+}

@@ -9,6 +9,17 @@ export default function MessagesContainer(props) {
 
     React.useEffect(
         () => {
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter') {
+                    handleSendMessages();
+                }
+            });
+        },
+        [],
+    )
+
+    React.useEffect(
+        () => {
             const fetchData = async () => {
                 try {
                     const lastMessage = messages[messages.length - 1];
@@ -30,8 +41,9 @@ export default function MessagesContainer(props) {
         setUserInput(textInput);
     };
 
-    const handleSendMessages = async (newMessage) => {
-        const allMessages = [...messages, newMessage];
+    const handleSendMessages = () => {
+        console.log(userInput);
+        const allMessages = [...messages, userInput];
         setMessages(allMessages);
         setUserInput('');
     };
@@ -39,10 +51,15 @@ export default function MessagesContainer(props) {
     return (
         <div className="messages-container">
             <div className="all-messages">
-                {messages.map((message) => <p>{message}</p>)}
-            </div>
-            <div className="all-responses">
-                {responses.map((response) => <p>{response}</p>)}
+                {messages.map((message, index) => {
+                    const response = responses[index + 1];
+                    return (
+                        <div>
+                            <p className="user-message">{message}</p>
+                            <p className="ai-response">{response}</p>
+                        </div>
+                    );
+                })}
             </div>
             <div className="text-input-container">
                 <input 
@@ -53,7 +70,7 @@ export default function MessagesContainer(props) {
                 />
                 <button 
                     className="send-button"
-                    onClick={() => handleSendMessages(userInput)}
+                    onClick={() => handleSendMessages()}
                 >
                     Send
                 </button>
