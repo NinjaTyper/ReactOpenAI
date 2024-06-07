@@ -6,28 +6,25 @@ export default function MessagesContainer(props) {
     const [userInput, setUserInput] = React.useState('');
     const [messages, setMessages] = React.useState([]);
     const [responses, setResponses] = React.useState([]);
-    const [counter ,setCounter] = React.useState(0);
 
     React.useEffect(
         () => {
-            setCounter(counter+1);
             const fetchData = async () => {
                 try {
                     const lastMessage = messages[messages.length - 1];
                     const apiUrl = `http://localhost:4000?question=${lastMessage}`;
                     const newResponse = await axios(apiUrl);
-                    console.log(newResponse.data);
                     const allResponses = [...responses, newResponse.data];
                     setResponses(allResponses);
                 } catch (error) {
                     console.log(error);
                 }
             }
-            if (messages[messages.length -1] && messages[messages.length - 1].toLowerCase() === 'hey ai') {
+            if (messages[messages.length - 1] && messages[messages.length - 1].toLowerCase() === 'hey ai') {
                 fetchData();
             }
         },
-        [messages, counter],
+        [messages.length],
     );
 
     const handleUserInputChange = (textInput) => {
@@ -35,7 +32,6 @@ export default function MessagesContainer(props) {
     };
 
     const handleSendMessages = () => {
-        console.log(userInput);
         const allMessages = [...messages, userInput];
         setMessages(allMessages);
         setUserInput('');
