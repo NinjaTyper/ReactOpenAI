@@ -9,32 +9,22 @@ export default function MessagesContainer(props) {
 
     React.useEffect(
         () => {
-            document.addEventListener('keydown', (event) => {
-                if (event.key === 'Enter') {
-                    handleSendMessages();
-                }
-            });
-        },
-        [],
-    )
-
-    React.useEffect(
-        () => {
             const fetchData = async () => {
                 try {
                     const lastMessage = messages[messages.length - 1];
                     const apiUrl = `http://localhost:4000?question=${lastMessage}`;
                     const newResponse = await axios(apiUrl);
-                    console.log(newResponse.data);
                     const allResponses = [...responses, newResponse.data];
                     setResponses(allResponses);
                 } catch (error) {
                     console.log(error);
                 }
             }
-            fetchData();
+            if (messages[messages.length - 1] && messages[messages.length - 1].toLowerCase() === 'hey ai') {
+                fetchData();
+            }
         },
-        [messages],
+        [messages.length],
     );
 
     const handleUserInputChange = (textInput) => {
@@ -42,7 +32,6 @@ export default function MessagesContainer(props) {
     };
 
     const handleSendMessages = () => {
-        console.log(userInput);
         const allMessages = [...messages, userInput];
         setMessages(allMessages);
         setUserInput('');
@@ -52,7 +41,7 @@ export default function MessagesContainer(props) {
         <div className="messages-container">
             <div className="all-messages">
                 {messages.map((message, index) => {
-                    const response = responses[index + 1];
+                    const response = responses[index];
                     return (
                         <div>
                             <p className="user-message">{message}</p>
@@ -67,6 +56,11 @@ export default function MessagesContainer(props) {
                     className="text-input-field"
                     onChange={(e) => handleUserInputChange(e.target.value)}
                     value={userInput}
+                    onKeyDown={(e) => {
+                        if (e.code === 'Enter') {
+                            handleSendMessages();
+                        }
+                    }}
                 />
                 <button 
                     className="send-button"
