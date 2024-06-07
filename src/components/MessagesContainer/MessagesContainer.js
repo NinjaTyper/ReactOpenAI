@@ -6,20 +6,11 @@ export default function MessagesContainer(props) {
     const [userInput, setUserInput] = React.useState('');
     const [messages, setMessages] = React.useState([]);
     const [responses, setResponses] = React.useState([]);
+    const [counter ,setCounter] = React.useState(0);
 
     React.useEffect(
         () => {
-            document.addEventListener('keydown', (event) => {
-                if (event.key === 'Enter') {
-                    handleSendMessages();
-                }
-            });
-        },
-        [],
-    )
-
-    React.useEffect(
-        () => {
+            setCounter(counter+1);
             const fetchData = async () => {
                 try {
                     const lastMessage = messages[messages.length - 1];
@@ -32,9 +23,11 @@ export default function MessagesContainer(props) {
                     console.log(error);
                 }
             }
-            fetchData();
+            if (messages[messages.length -1] && messages[messages.length - 1].toLowerCase() === 'hey ai') {
+                fetchData();
+            }
         },
-        [messages],
+        [messages, counter],
     );
 
     const handleUserInputChange = (textInput) => {
@@ -52,7 +45,7 @@ export default function MessagesContainer(props) {
         <div className="messages-container">
             <div className="all-messages">
                 {messages.map((message, index) => {
-                    const response = responses[index + 1];
+                    const response = responses[index];
                     return (
                         <div>
                             <p className="user-message">{message}</p>
@@ -67,6 +60,11 @@ export default function MessagesContainer(props) {
                     className="text-input-field"
                     onChange={(e) => handleUserInputChange(e.target.value)}
                     value={userInput}
+                    onKeyDown={(e) => {
+                        if (e.code === 'Enter') {
+                            handleSendMessages();
+                        }
+                    }}
                 />
                 <button 
                     className="send-button"
